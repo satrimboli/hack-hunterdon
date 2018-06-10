@@ -9,6 +9,7 @@ body {
   background: #fafafa;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
+  padding: 10px;
 }
 
 #map_wrapper {
@@ -38,4 +39,42 @@ body {
   font-size: 60px;
   line-height: 1;
   letter-spacing: -1px;
+}
+
+.waypoint {
+  display: none;
+  border-top: 1px solid black;
+  padding-top: 20px;
+  margin-top: 20px;
+}
+
+.waypoint:first-child {
+  border-top: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.active {
+  display: block;
+}
+
+.caption {
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.coordinates {
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: 0.8em;
+}
+img {
+  margin-bottom: 10px;
+  max-width: 100%;
+}
+
+.directions {
+  font-style: italic;
 }

@@ -36,33 +36,15 @@ function initialize() {
 
 // Calculate our route between the markers & set/change the mode of travel
 function calcRoute() {
-    var marker, i;
+    var selectedMode = document.getElementById('travelType').value;
     var request = {
-      travelMode: document.getElementById('travelType').value
+        // London Eye
+        origin: new google.maps.LatLng(markers[0][1], markers[0][2]),
+        // Palace of Westminster
+        destination: new google.maps.LatLng(markers[1][1], markers[1][2]),
+        // Set our mode of travel - default: walking
+        travelMode: google.maps.TravelMode[selectedMode]
     };
-    for (i = 0; i < locations.length; i++) {
-      marker = new google.maps.Marker({
-        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-      });
-
-      google.maps.event.addListener(marker, 'click', (function(marker, i) {
-        return function() {
-          infowindow.setContent(locations[i][0]);
-          infowindow.open(map, marker);
-        }
-      })(marker, i));
-
-      if (i == 0) request.origin = marker.getPosition();
-      else if (i == locations.length - 1) request.destination = marker.getPosition();
-      else {
-        if (!request.waypoints) request.waypoints = [];
-        request.waypoints.push({
-          location: marker.getPosition(),
-          stopover: true
-        });
-      }
-
-    }
     directionsService.route(request, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);

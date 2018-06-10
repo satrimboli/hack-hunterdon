@@ -20,46 +20,94 @@
 
   </head>
   <body>
-<div id="map_wrapper">
-    <div id="map_canvas" class="mapping"></div>
-</div>
-    <!--[if IE]>
-      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-    <div id="travel_selector">
-        <p><strong>Mode of Travel: </strong>
-        <select id="travelType" onchange="calcRoute();">
-            <option value="WALKING">Walking</option>
-            <option value="BICYCLING">Bicycling</option>
-            <option value="DRIVING">Driving</option>
-            <option value="TRANSIT">Transit</option>
-        </select></p>
+    <div id="map_wrapper">
+        <div id="map_canvas" class="mapping"></div>
     </div>
+        <!--[if IE]>
+          <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div id="travel_selector">
+            <p><strong>Mode of Travel: </strong>
+            <select id="travelType" onchange="calcRoute();">
+                <option value="WALKING">Walking</option>
+                <option value="BICYCLING">Bicycling</option>
+                <option value="DRIVING">Driving</option>
+                <option value="TRANSIT">Transit</option>
+            </select></p>
+        </div>
 
-<input type="text" id="userInputName"=> Name</input>
-<input type="text" id="userInputLatitude"=> Name</input>
-<input type="text" id="userInputLongitude"=> Name</input>
-<button onclick="test()">Submit</button>
+    <input type="text" id="userInputName"=> Name</input>
+    <input type="text" id="userInputLatitude"=> Name</input>
+    <input type="text" id="userInputLongitude"=> Name</input>
+    <button onclick="test()">Submit</button>
 
-<!-- add this line for function to write into -->
-<p id="demo"></p>
+    <!-- add this line for function to write into -->
+    <p id="demo"></p>
 
-<script type="text/javascript">
-function test(){
-    var userInput = document.getElementById("userInput").value;
-    document.getElementById("demo").innerHTML = userInput;
-}
-</script>
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    <script>
-      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-      e.src='https://www.google-analytics.com/analytics.js';
-      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-XXXXX-X');ga('send','pageview');
+    <script type="text/javascript">
+    function test(){
+        var userInput = document.getElementById("userInput").value;
+        document.getElementById("demo").innerHTML = userInput;
+    }
     </script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+          (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+          function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+          e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+          e.src='https://www.google-analytics.com/analytics.js';
+          r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+          ga('create','UA-XXXXX-X');ga('send','pageview');
+        </script>
+    <div>
+      <div class="waypoint">
+        <img src="http://www.trainweb.org/chris/chbw1.JPG" />
+        <div class="caption">South Branch of Central Railroad <br />(now a Unity Bank)
+          </div>
+        <div class="coordinates">40.5066852,-74.8583799
+          </div>
+        <audio src="https://s3.amazonaws.com/walking-stories/audio/audio1.mp3" controls></audio>
+
+        <div class="story">
+          <p>The rain had been falling steadily all evening, but it didn’t bother Detective Adams. He had a job to do.
+            </p>
+          <p>Diane Vanderbilt, the 25-year old heir to the Vanderbilt fortune, was murdered that night. She was set to take full ownership of the bustling Union Hotel later this week, but earlier today, she was found dead across the street in front of the Flemington Courthouse. It was up to Adams to figure out who did it… and why.
+            </p>
+        </div>
+        <div class="directions">Walk 2 mins</div>
+      </div>
+      <div class="waypoint">
+        <img src="https://uploads.thealternativepress.com/uploads/photos/c5/best_b0a359c1a94ef70d70b5_1d24ec18edf33e006193_P6271680.JPG" alt="">
+        <div class="caption">Flemington Filling Station</div>
+        <div class="coordinates">40.5078924,-74.8585569
+          </div>
+          <audio src="https://s3.amazonaws.com/walking-stories/audio/audio2.mp3" controls></audio>
+          <div class="story">
+            <p>Adams looked to the right at the old gas station on the corner of Main and William. Owning the Union Hotel made Ms. Vanderbilt the owner of the gas station property, too, and Adams knew there were some people in the town who weren’t happy about that. Weeks ago, Vanderbilt publicly declared that she’d keep the lot barren and undeveloped. “Who cares about this useless lot?” she said to reporters. But a few people in the town did, in fact, care. Neighbors, like Laura Whitley, the woman who lived next to the gas station and wanted to revitalize it into a social hub, despised Vanderbuilt and her negative ideas. But despised her enough to kill? Perhaps...
+              </p>
+              <p>Adams continued to walk towards the center of town. He was approaching the Flemington Courthouse on the left, where Diane Vanderbilt’s body was found. Maybe he’d find a clue there that might lead him to the killer...
+                </p>
+          </div>
+          <div class="directions">Walk 4 mins</div>
+      </div>
+      <div class="waypoint">
+        <img src="https://www.cardcow.com/images/set762/card00062_fr.jpg" alt="">
+        <div class="caption">Flemington Courthouse - True Meridian Marker
+            </div>
+            <div class="coordinates">40.5103909,-74.8589048
+              </div>
+              <audio src="https://s3.amazonaws.com/walking-stories/audio/audio3.mp3"></audio>
+              <div class="story">
+                <p>
+                    The Courthouse was a beautiful building, sure, but with the gaggle of reporters huddled out front, it lost much of its luster. Detective Adams pushed through the crowd until he saw the exact spot Vanderbilt was murdered: in front of a marker labeled True Meridian. True Meridian… could this mean something? Was the killer leaving a clue?
+
+                </p>
+
+              </div>
+              <div class="directions">Walk 1 min</div>
+            </div>
+</div>
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
