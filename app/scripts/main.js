@@ -1,8 +1,11 @@
 $(document).ready(function() {
   var counter = 0;
-  var interval = window.setInterval(playWaypoint, 3000);
   var waypoints = $('.waypoint');
   var currentWaypoint;
+  
+  setTimeout(playWaypoint, 2000);
+
+  var interval = window.setInterval(playWaypoint, 30000);
 
   function playWaypoint() {
     console.log('playing waypoint ' + counter);
@@ -22,8 +25,8 @@ var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
   var locations = [
     ['South Branch of Central Railroad', 40.5066852, -74.8583799, 2],
-    ['Flemington Filling Station', 40.5078924, -74.8585569, 3]
-    ['Flemington Courthouse', 40.5103909,-74.8589048, 1],
+    ['Flemington Filling Station', 40.5078924, -74.8585569, 3],
+    ['Flemington Courthouse', 40.5103909,-74.8589048, 1]
     // ['Town Clock', 40.5117922,-74.8590777, 5],
     // ['Flemington War Veterans Memorial', 40.5130621,-74.8589991, 4]
   ];
@@ -31,12 +34,12 @@ var directionsService = new google.maps.DirectionsService();
 function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer();
 
-
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 15,
     center: new google.maps.LatLng(40.505, -74.85),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
+
   directionsDisplay.setMap(map);
   var infowindow = new google.maps.InfoWindow();
 
@@ -44,10 +47,10 @@ function initialize() {
   var request = {
     travelMode: google.maps.TravelMode.DRIVING
   };
+
   for (i = 0; i < locations.length; i++) {
     marker = new google.maps.Marker({
-      position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-      map: map
+      position: new google.maps.LatLng(locations[i][1], locations[i][2])
     });
 
     google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -56,6 +59,7 @@ function initialize() {
         infowindow.open(map, marker);
       }
     })(marker, i));
+    console.log(i)
     if (i == 0) request.origin = marker.getPosition();
     else if (i == locations.length - 1) request.destination = marker.getPosition();
     else {
@@ -67,6 +71,7 @@ function initialize() {
     }
 
   }
+  console.log(request)
   directionsService.route(request, function(result, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(result);
