@@ -20,7 +20,7 @@ function StoryPath(wps, titl, desc) {
 export default class App extends React.Component {
     constructor(props) {
 	super(props);
-	var waypoint1 = new Waypoint("0", 32, 32, 'test', 'testing', '', '');
+	var waypoint1 = new Waypoint("0", 32, 32, 'test', 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Proboscis_monkey_%28Nasalis_larvatus%29_male_head.jpg/220px-Proboscis_monkey_%28Nasalis_larvatus%29_male_head.jpg', '', '');
 	this.state = {
 	    
 	    image: waypoint1.image,
