@@ -1,53 +1,76 @@
-jQuery(function($) {
-    // Asynchronously Load the map API
-    var script = document.createElement('script');
-    script.src = "//maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
-    document.body.appendChild(script);
+$(document).ready(function() {
+  var counter = 0;
+  var interval = window.setInterval(playWaypoint, 3000);
+  var waypoints = $('.waypoint');
+  var currentWaypoint;
+
+  function playWaypoint() {
+    console.log('playing waypoint ' + counter);
+
+    currentWaypoint = waypoints.eq(counter);
+    counter ++;
+
+    currentWaypoint.addClass('active');
+    currentWaypoint.find('audio')[0].play();
+    currentWaypoint[0].scrollIntoView();
+  }
+
 });
+var geocoder;
+var map;
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
+  var locations = [
+    ['South Branch of Central Railroad', 40.5066852, -74.8583799, 2],
+    ['Flemington Filling Station', 40.5078924, -74.8585569, 3]
+    ['Flemington Courthouse', 40.5103909,-74.8589048, 1],
+    // ['Town Clock', 40.5117922,-74.8590777, 5],
+    // ['Flemington War Veterans Memorial', 40.5130621,-74.8589991, 4]
+  ];
 
 function initialize() {
-    // Change a few 'var variableName' to 'window.' This lets us set global variables from within our function
-    window.directionsService = new google.maps.DirectionsService();
-    window.directionsDisplay = new google.maps.DirectionsRenderer();
-    var map;
-    var bounds = new google.maps.LatLngBounds();
-    var mapOptions = {
-        mapTypeId: 'roadmap'
-    };
+  directionsDisplay = new google.maps.DirectionsRenderer();
 
-    // Display a map on the page
-    map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-    map.setTilt(45);
 
-    // Multiple Markers (Start & end destination)
-    window.markers = [
-        ['South Branch of Central Railroad (Start)', 40.5066852,-74.8583799],
-        ['Flemington Filling Station', 40.5078924,-74.8585569],
-        ['Flemington Courthouse (True Meridian Marker)', 40.5103909,-74.8589048]
-    ];
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 15,
+    center: new google.maps.LatLng(40.505, -74.85),
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  });
+  directionsDisplay.setMap(map);
+  var infowindow = new google.maps.InfoWindow();
 
-    // Render our directions on the map
-    directionsDisplay.setMap(map);
-
-    // Set the current route - default: walking
-    calcRoute();
-
-}
-
-// Calculate our route between the markers & set/change the mode of travel
-function calcRoute() {
-    var selectedMode = document.getElementById('travelType').value;
-    var request = {
-        // London Eye
-        origin: new google.maps.LatLng(markers[0][1], markers[0][2]),
-        // Palace of Westminster
-        destination: new google.maps.LatLng(markers[1][1], markers[1][2]),
-        // Set our mode of travel - default: walking
-        travelMode: google.maps.TravelMode[selectedMode]
-    };
-    directionsService.route(request, function(response, status) {
-        if (status == google.maps.DirectionsStatus.OK) {
-            directionsDisplay.setDirections(response);
-        }
+  var marker, i;
+  var request = {
+    travelMode: google.maps.TravelMode.DRIVING
+  };
+  for (i = 0; i < locations.length; i++) {
+    marker = new google.maps.Marker({
+      position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+      map: map
     });
+
+    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+      return function() {
+        infowindow.setContent(locations[i][0]);
+        infowindow.open(map, marker);
+      }
+    })(marker, i));
+    if (i == 0) request.origin = marker.getPosition();
+    else if (i == locations.length - 1) request.destination = marker.getPosition();
+    else {
+      if (!request.waypoints) request.waypoints = [];
+      request.waypoints.push({
+        location: marker.getPosition(),
+        stopover: true
+      });
+    }
+
+  }
+  directionsService.route(request, function(result, status) {
+    if (status == google.maps.DirectionsStatus.OK) {
+      directionsDisplay.setDirections(result);
+    }
+  });
 }
+google.maps.event.addDomListener(window, "load", initialize);

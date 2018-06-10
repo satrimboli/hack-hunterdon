@@ -20,9 +20,8 @@
 
   </head>
   <body>
-    <div id="map_wrapper">
-        <div id="map_canvas" class="mapping"></div>
-    </div>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <div id="map"></div>
         <!--[if IE]>
           <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -35,11 +34,6 @@
                 <option value="TRANSIT">Transit</option>
             </select></p>
         </div>
-
-    <input type="text" id="userInputName"=> Name</input>
-    <input type="text" id="userInputLatitude"=> Name</input>
-    <input type="text" id="userInputLongitude"=> Name</input>
-    <button onclick="test()">Submit</button>
 
     <!-- add this line for function to write into -->
     <p id="demo"></p>
