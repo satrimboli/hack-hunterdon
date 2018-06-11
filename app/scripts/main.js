@@ -1,35 +1,35 @@
 $(document).ready(function() {
-  var counter = 0;
-  var waypoints = $('.waypoint');
-  var currentWaypoint;
+
   
-  setTimeout(playWaypoint, 2000);
+  // setTimeout(playWaypoint, 2000);
 
-  var interval = window.setInterval(playWaypoint, 30000);
+  // var interval = window.setInterval(playWaypoint, 30000);
 
-  function playWaypoint() {
-    console.log('playing waypoint ' + counter);
 
-    currentWaypoint = waypoints.eq(counter);
-    counter ++;
-
-    currentWaypoint.addClass('active');
-    currentWaypoint.find('audio')[0].play();
-    currentWaypoint[0].scrollIntoView();
-  }
 
 });
+var counter = 0;
+var waypoints = $('.waypoint');
+var currentWaypoint;
+
+function playWaypoint(index) {
+  console.log('playing waypoint ' + index);
+
+  currentWaypoint = waypoints.eq(index);
+
+  currentWaypoint.addClass('active');
+  currentWaypoint.find('audio')[0].play();
+  currentWaypoint[0].scrollIntoView();
+}
 var geocoder;
 var map;
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
-  var locations = [
-    ['South Branch of Central Railroad', 40.5066852, -74.8583799, 2],
-    ['Flemington Filling Station', 40.5078924, -74.8585569, 3],
-    ['Flemington Courthouse', 40.5103909,-74.8589048, 1]
-    // ['Town Clock', 40.5117922,-74.8590777, 5],
-    // ['Flemington War Veterans Memorial', 40.5130621,-74.8589991, 4]
-  ];
+var locations = [
+  [40.5066852, -74.8583799],
+  [40.5078924, -74.8585569],
+  [40.5103909,-74.8589048]
+];
 
 function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer();
@@ -50,7 +50,7 @@ function initialize() {
 
   for (i = 0; i < locations.length; i++) {
     marker = new google.maps.Marker({
-      position: new google.maps.LatLng(locations[i][1], locations[i][2])
+      position: new google.maps.LatLng(locations[i][0], locations[i][1])
     });
 
     google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -59,7 +59,7 @@ function initialize() {
         infowindow.open(map, marker);
       }
     })(marker, i));
-    console.log(i)
+
     if (i == 0) request.origin = marker.getPosition();
     else if (i == locations.length - 1) request.destination = marker.getPosition();
     else {
@@ -71,11 +71,52 @@ function initialize() {
     }
 
   }
-  console.log(request)
+
   directionsService.route(request, function(result, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(result);
     }
   });
 }
-google.maps.event.addDomListener(window, "load", initialize);
+google.maps.event.addDomListener(window, 'load', initialize);
+
+window.onload = function() {
+  var prevPosition;
+  var distance;
+
+  if (navigator.geolocation) {
+    navigator.geolocation.watchPosition(function(position) {
+      if(prevPosition && (position.coords.latitude === prevPosition.coords.latitude || position.coords.longitude === prevPosition.coords.longitude)) {
+        return;
+      }
+      prevPosition = position;
+
+      locations.forEach(function(value, index, arr) {
+        distance = calculateDistance(value[0], value[1], position.coords.latitude, position.coords.longitude);
+        console.log(index)
+        console.log(distance)
+        if(distance < .05) {
+          playWaypoint(index);
+        }
+      });
+    });
+  }
+};
+
+// Reused code - copyright Moveable Type Scripts - retrieved May 4, 2010.
+// http://www.movable-type.co.uk/scripts/latlong.html
+// Under Creative Commons License http://creativecommons.org/licenses/by/3.0/
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  var R = 6371; // km
+  var dLat = (lat2-lat1).toRad();
+  var dLon = (lon2-lon1).toRad();
+  var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
+          Math.sin(dLon/2) * Math.sin(dLon/2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  var d = R * c;
+  return d;
+}
+Number.prototype.toRad = function() {
+  return this * Math.PI / 180;
+}

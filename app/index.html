@@ -21,19 +21,6 @@
   </head>
   <body>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <div id="map"></div>
-        <!--[if IE]>
-          <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        <div id="travel_selector">
-            <p><strong>Mode of Travel: </strong>
-            <select id="travelType" onchange="calcRoute();">
-                <option value="WALKING">Walking</option>
-                <option value="BICYCLING">Bicycling</option>
-                <option value="DRIVING">Driving</option>
-                <option value="TRANSIT">Transit</option>
-            </select></p>
-        </div>
 
     <!-- add this line for function to write into -->
     <p id="demo"></p>
@@ -91,7 +78,7 @@
             </div>
             <div class="coordinates">40.5103909, -74.8589048
               </div>
-              <audio src="https://s3.amazonaws.com/walking-stories/audio/audio3.mp3"></audio>
+              <audio src="https://s3.amazonaws.com/walking-stories/audio/audio3.mp3" controls></audio>
               <div class="story">
                 <p>
                     The Courthouse was a beautiful building, sure, but with the gaggle of reporters huddled out front, it lost much of its luster. Detective Adams pushed through the crowd until he saw the exact spot Vanderbilt was murdered: in front of a marker labeled True Meridian. True Meridian… could this mean something? Was the killer leaving a clue?
